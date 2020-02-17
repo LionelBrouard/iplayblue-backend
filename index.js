@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const games = "";
 app.use(cors());
+
 app.get("/", (req, res) => {
   return res.json({
     games: [
@@ -8883,6 +8885,19 @@ app.get("/", (req, res) => {
       }
     ]
   });
+});
+
+app.get("/offer/:id", async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (event) {
+      res.json(event);
+    } else {
+      res.json({ message: "No game found" });
+    }
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 });
 
 app.listen(process.env.PORT || 3200, () => {
